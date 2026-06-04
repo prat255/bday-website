@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "image": "/uploads/sample-1.svg",
+    "text": "The first time we laughed until our cheeks hurt — I knew you were someone special.",
+    "order": 1
+  },
+  {
+    "id": 2,
+    "image": "/uploads/sample-2.svg",
+    "text": "Every ordinary day became brighter the moment you walked into my life.",
+    "order": 2
+  },
+  {
+    "id": 3,
+    "image": "/uploads/sample-3.svg",
+    "text": "Here is to countless more memories, adventures, and quiet moments together.",
+    "order": 3
+  },
+  {
+    "id": 4,
+    "image": "/uploads/1780603912907-193954456.jpg",
+    "text": "test text",
+    "order": 4
+  }
+]
