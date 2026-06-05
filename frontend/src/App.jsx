@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import JourneyPage from './pages/JourneyPage';
-import FinalePage from './pages/FinalePage';
+import MessagePage from './pages/MessagePage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import { JourneyRoute } from './components/ProtectedRoute';
@@ -20,10 +20,10 @@ export default function App() {
         }
       />
       <Route
-        path="/finale"
+        path="/message"
         element={
           <JourneyRoute>
-            <FinalePage />
+            <MessagePage />
           </JourneyRoute>
         }
       />

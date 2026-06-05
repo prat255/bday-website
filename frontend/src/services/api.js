@@ -39,6 +39,11 @@ export async function fetchMemories() {
   return handleResponse(res);
 }
 
+export async function fetchMessage() {
+  const res = await fetch(`${API_BASE}/api/message`);
+  return handleResponse(res);
+}
+
 export async function adminLogin(username, password) {
   const res = await fetch(`${API_BASE}/api/admin/login`, {
     method: 'POST',
@@ -94,6 +99,18 @@ export async function updateWebsitePassword(password) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ password }),
+  });
+  return handleResponse(res);
+}
+
+export async function updateMessage({ heading, message, thanksMessage }) {
+  const res = await fetch(`${API_BASE}/api/admin/message`, {
+    method: 'PUT',
+    headers: {
+      ...getHeaders(true),
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ heading, message, thanksMessage }),
   });
   return handleResponse(res);
 }

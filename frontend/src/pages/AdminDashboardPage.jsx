@@ -6,11 +6,13 @@ import EmptyState from '../components/EmptyState';
 import ErrorMessage from '../components/ErrorMessage';
 import {
   fetchMemories,
+  fetchMessage,
   createMemory,
   updateMemory,
   deleteMemory,
   reorderMemories,
   updateWebsitePassword,
+  updateMessage,
   imageUrl,
 } from '../services/api';
 import { useAdminAuth } from '../hooks/useAdminAuth';
@@ -31,6 +33,11 @@ export default function AdminDashboardPage() {
   const [submitting, setSubmitting] = useState(false);
   const [newSitePassword, setNewSitePassword] = useState('');
   const [reorderDraft, setReorderDraft] = useState({});
+  const [messageForm, setMessageForm] = useState({
+    heading: '',
+    message: '',
+    thanksMessage: '',
+  });
 
   const loadMemories = useCallback(async () => {
     setLoading(true);
@@ -48,6 +55,21 @@ export default function AdminDashboardPage() {
   useEffect(() => {
     loadMemories();
   }, [loadMemories]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await fetchMessage();
+        setMessageForm({
+          heading: data.heading || '',
+          message: data.message || '',
+          thanksMessage: data.thanksMessage || '',
+        });
+      } catch {
+        /* defaults stay empty until user fills */
+      }
+    })();
+  }, []);
 
   const resetForm = () => {
     if (form.imagePreview) URL.revokeObjectURL(form.imagePreview);
@@ -157,6 +179,21 @@ export default function AdminDashboardPage() {
     }
   };
 
+  const handleMessageSave = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError('');
+    setSuccess('');
+    try {
+      await updateMessage(messageForm);
+      setSuccess('Message page updated');
+    } catch (err) {
+      setError(err.message || 'Message update failed');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const handlePreview = () => {
     unlock();
     navigate('/journey');
@@ -260,26 +297,74 @@ export default function AdminDashboardPage() {
           </motion.section>
 
           <motion.section
-            className="glass-card rounded-2xl p-6"
+            className="glass-card rounded-2xl p-6 space-y-6"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <h2 className="font-display text-xl text-pink-soft mb-4">Website password</h2>
-            <form onSubmit={handlePasswordChange} className="space-y-4">
-              <input
-                type="password"
-                className="input-field"
-                placeholder="New journey password"
-                value={newSitePassword}
-                onChange={(e) => setNewSitePassword(e.target.value)}
-                minLength={4}
-                required
-              />
-              <button type="submit" className="btn-primary w-full" disabled={submitting}>
-                Update password
-              </button>
-            </form>
+            <div>
+              <h2 className="font-display text-xl text-pink-soft mb-4">Website password</h2>
+              <form onSubmit={handlePasswordChange} className="space-y-4">
+                <input
+                  type="password"
+                  className="input-field"
+                  placeholder="New journey password"
+                  value={newSitePassword}
+                  onChange={(e) => setNewSitePassword(e.target.value)}
+                  minLength={4}
+                  required
+                />
+                <button type="submit" className="btn-primary w-full" disabled={submitting}>
+                  Update password
+                </button>
+              </form>
+            </div>
+
+            <div className="border-t border-pink-soft/10 pt-6">
+              <h2 className="font-display text-xl text-pink-soft mb-4">Message page</h2>
+              <form onSubmit={handleMessageSave} className="space-y-4">
+                <div>
+                  <label className="block text-sm text-cream/70 mb-1.5">Heading</label>
+                  <input
+                    type="text"
+                    className="input-field"
+                    value={messageForm.heading}
+                    onChange={(e) =>
+                      setMessageForm((f) => ({ ...f, heading: e.target.value }))
+                    }
+                    placeholder="Happy Birthday ❤️"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-cream/70 mb-1.5">Typewriter message</label>
+                  <textarea
+                    className="input-field min-h-[120px] resize-y"
+                    value={messageForm.message}
+                    onChange={(e) =>
+                      setMessageForm((f) => ({ ...f, message: e.target.value }))
+                    }
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-cream/70 mb-1.5">Closing line</label>
+                  <input
+                    type="text"
+                    className="input-field"
+                    value={messageForm.thanksMessage}
+                    onChange={(e) =>
+                      setMessageForm((f) => ({ ...f, thanksMessage: e.target.value }))
+                    }
+                    placeholder="Thank you for being part of my life."
+                    required
+                  />
+                </div>
+                <button type="submit" className="btn-primary w-full" disabled={submitting}>
+                  Save message text
+                </button>
+              </form>
+            </div>
           </motion.section>
         </div>
 

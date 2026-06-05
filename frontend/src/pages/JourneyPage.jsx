@@ -36,7 +36,7 @@ export default function JourneyPage() {
 
   const goNext = useCallback(() => {
     if (index >= memories.length - 1) {
-      navigate('/finale');
+      navigate('/message');
       return;
     }
     setDirection(1);

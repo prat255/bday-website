@@ -50,3 +50,18 @@ export function getNextMemoryId(memories) {
   if (!memories.length) return 1;
   return Math.max(...memories.map((m) => Number(m.id))) + 1;
 }
+
+const DEFAULT_MESSAGE = {
+  heading: 'Happy Birthday ❤️',
+  message:
+    'On this beautiful day, I want you to know how deeply loved, cherished, and celebrated you are. Every moment with you is a gift.',
+  thanksMessage: 'Thank you for being part of my life.',
+};
+
+export async function getMessage() {
+  return readJson('message.json', DEFAULT_MESSAGE);
+}
+
+export async function saveMessage(content) {
+  await writeJson('message.json', content);
+}

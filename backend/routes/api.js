@@ -8,6 +8,7 @@ import {
   reorderMemories,
   updateWebsitePassword,
 } from '../controllers/memoryController.js';
+import { getMessageContent, updateMessageContent } from '../controllers/messageController.js';
 import { requireAdmin } from '../middleware/auth.js';
 import { upload } from '../middleware/upload.js';
 
@@ -15,6 +16,7 @@ const router = Router();
 
 router.post('/verify-password', verifyPassword);
 router.get('/memories', listMemories);
+router.get('/message', getMessageContent);
 
 router.post('/admin/login', adminLogin);
 
@@ -23,5 +25,6 @@ router.put('/admin/memory/reorder', requireAdmin, reorderMemories);
 router.put('/admin/memory/:id', requireAdmin, upload.single('image'), updateMemory);
 router.delete('/admin/memory/:id', requireAdmin, deleteMemory);
 router.put('/admin/password', requireAdmin, updateWebsitePassword);
+router.put('/admin/message', requireAdmin, updateMessageContent);
 
 export default router;

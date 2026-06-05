@@ -1,6 +1,6 @@
 # Interactive Birthday Journey Website
 
-A romantic, cinematic full-stack experience: password gate → memory journey → birthday finale. Includes an admin dashboard for managing memories and the site password.
+A romantic, cinematic full-stack experience: password gate → memory journey → birthday message. Includes an admin dashboard for managing memories and the site password.
 
 ## Stack
 
@@ -70,12 +70,14 @@ Open `http://localhost:5173`. Vite proxies `/api` and `/uploads` to the backend 
 | DELETE | `/api/admin/memory/:id` | JWT |
 | PUT | `/api/admin/memory/reorder` | JWT |
 | PUT | `/api/admin/password` | JWT |
+| GET | `/api/message` | Public |
+| PUT | `/api/admin/message` | JWT |
 
 ## User flow
 
 1. **/** — Landing page with password
 2. **/journey** — One memory at a time (alternating layout on desktop)
-3. **/finale** — Birthday wish, confetti, restart
+3. **/message** — Birthday wish, confetti, restart
 
 ## Admin flow
 
@@ -104,7 +106,7 @@ Open `http://localhost:5173`. Vite proxies `/api` and `/uploads` to the backend 
 
 1. Run seed, then change passwords in admin dashboard
 2. Replace sample images in admin or upload your photos
-3. Edit finale message in `frontend/src/pages/FinalePage.jsx`
+3. Edit message text in **Admin → Message page** (heading, typewriter message, closing line)
 4. Adjust colors in `frontend/src/index.css`
 
 ## Default credentials (after seed)
