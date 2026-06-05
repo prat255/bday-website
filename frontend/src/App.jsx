@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import JourneyPage from './pages/JourneyPage';
 import MessagePage from './pages/MessagePage';
+import WishPage from './pages/WishPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import { JourneyRoute } from './components/ProtectedRoute';
@@ -24,6 +25,14 @@ export default function App() {
         element={
           <JourneyRoute>
             <MessagePage />
+          </JourneyRoute>
+        }
+      />
+      <Route
+        path="/wish"
+        element={
+          <JourneyRoute>
+            <WishPage />
           </JourneyRoute>
         }
       />

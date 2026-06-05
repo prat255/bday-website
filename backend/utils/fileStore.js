@@ -65,3 +65,17 @@ export async function getMessage() {
 export async function saveMessage(content) {
   await writeJson('message.json', content);
 }
+
+export async function getWishes() {
+  const wishes = await readJson('wishes.json', []);
+  return wishes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+}
+
+export async function saveWishes(wishes) {
+  await writeJson('wishes.json', wishes);
+}
+
+export function getNextWishId(wishes) {
+  if (!wishes.length) return 1;
+  return Math.max(...wishes.map((w) => Number(w.id))) + 1;
+}

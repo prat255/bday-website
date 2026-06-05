@@ -72,17 +72,22 @@ Open `http://localhost:5173`. Vite proxies `/api` and `/uploads` to the backend 
 | PUT | `/api/admin/password` | JWT |
 | GET | `/api/message` | Public |
 | PUT | `/api/admin/message` | JWT |
+| POST | `/api/wishes` | Public |
+| GET | `/api/admin/wishes` | JWT |
+| DELETE | `/api/admin/wishes` | JWT |
+| DELETE | `/api/admin/wishes/:id` | JWT |
 
 ## User flow
 
 1. **/** — Landing page with password
 2. **/journey** — One memory at a time (alternating layout on desktop)
-3. **/message** — Birthday wish, confetti, restart
+3. **/message** — Birthday wish, confetti, option to make a wish
+4. **/wish** — Write a private wish in the wish box
 
 ## Admin flow
 
 1. **/admin** — Login
-2. **/admin/dashboard** — CRUD memories, reorder, change site password, preview journey
+2. **/admin/dashboard** — CRUD memories, view/delete wishes, reorder, change site password, preview journey
 
 ## Deployment
 

@@ -130,11 +130,15 @@ export default function MessagePage() {
         </motion.p>
 
         <motion.div
+          className="flex flex-col sm:flex-row gap-3 justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: showThanks ? 1 : 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <button type="button" className="btn-primary" onClick={handleRestart}>
+          <button type="button" className="btn-primary" onClick={() => navigate('/wish')}>
+            Make a Wish
+          </button>
+          <button type="button" className="btn-ghost" onClick={handleRestart}>
             Restart Journey
           </button>
         </motion.div>

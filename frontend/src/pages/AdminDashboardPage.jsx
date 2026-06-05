@@ -13,6 +13,9 @@ import {
   reorderMemories,
   updateWebsitePassword,
   updateMessage,
+  fetchWishes,
+  deleteWish,
+  clearWishes,
   imageUrl,
 } from '../services/api';
 import { useAdminAuth } from '../hooks/useAdminAuth';
@@ -38,6 +41,8 @@ export default function AdminDashboardPage() {
     message: '',
     thanksMessage: '',
   });
+  const [wishes, setWishes] = useState([]);
+  const [wishesLoading, setWishesLoading] = useState(true);
 
   const loadMemories = useCallback(async () => {
     setLoading(true);
@@ -56,6 +61,18 @@ export default function AdminDashboardPage() {
     loadMemories();
   }, [loadMemories]);
 
+  const loadWishes = useCallback(async () => {
+    setWishesLoading(true);
+    try {
+      const data = await fetchWishes();
+      setWishes(data);
+    } catch (err) {
+      setError(err.message || 'Failed to load wishes');
+    } finally {
+      setWishesLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     (async () => {
       try {
@@ -69,7 +86,8 @@ export default function AdminDashboardPage() {
         /* defaults stay empty until user fills */
       }
     })();
-  }, []);
+    loadWishes();
+  }, [loadWishes]);
 
   const resetForm = () => {
     if (form.imagePreview) URL.revokeObjectURL(form.imagePreview);
@@ -191,6 +209,38 @@ export default function AdminDashboardPage() {
       setError(err.message || 'Message update failed');
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleDeleteWish = async (id) => {
+    if (!window.confirm('Delete this wish?')) return;
+    setError('');
+    try {
+      await deleteWish(id);
+      setSuccess('Wish deleted');
+      await loadWishes();
+    } catch (err) {
+      setError(err.message || 'Delete failed');
+    }
+  };
+
+  const handleClearWishes = async () => {
+    if (!window.confirm('Clear all wishes? This cannot be undone.')) return;
+    setError('');
+    try {
+      await clearWishes();
+      setSuccess('All wishes cleared');
+      await loadWishes();
+    } catch (err) {
+      setError(err.message || 'Clear failed');
+    }
+  };
+
+  const formatDate = (iso) => {
+    try {
+      return new Date(iso).toLocaleString();
+    } catch {
+      return iso;
     }
   };
 
@@ -367,6 +417,53 @@ export default function AdminDashboardPage() {
             </div>
           </motion.section>
         </div>
+
+        <section className="glass-card rounded-2xl p-6 overflow-x-auto mb-10">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+            <h2 className="font-display text-xl text-pink-soft">Wish box</h2>
+            {wishes.length > 0 && (
+              <button
+                type="button"
+                className="btn-ghost text-xs py-1.5 px-3 text-red-300 border-red-400/30"
+                onClick={handleClearWishes}
+              >
+                Clear all wishes
+              </button>
+            )}
+          </div>
+
+          {wishesLoading ? (
+            <LoadingSpinner label="Loading wishes..." />
+          ) : !wishes.length ? (
+            <EmptyState
+              title="No wishes yet"
+              description="Wishes left after the message page will appear here."
+            />
+          ) : (
+            <div className="space-y-4">
+              {wishes.map((wish) => (
+                <div
+                  key={wish.id}
+                  className="rounded-xl border border-pink-soft/10 bg-purple-deep/20 p-4 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3"
+                >
+                  <div className="min-w-0 flex-1">
+                    <p className="text-cream/90 font-display text-lg leading-relaxed whitespace-pre-wrap">
+                      {wish.text}
+                    </p>
+                    <p className="text-cream/40 text-xs mt-2">{formatDate(wish.createdAt)}</p>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn-ghost text-xs py-1.5 px-3 text-red-300 border-red-400/30 shrink-0"
+                    onClick={() => handleDeleteWish(wish.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
 
         <section className="glass-card rounded-2xl p-6 overflow-x-auto">
           <div className="flex items-center justify-between mb-4">

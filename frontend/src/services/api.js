@@ -114,3 +114,35 @@ export async function updateMessage({ heading, message, thanksMessage }) {
   });
   return handleResponse(res);
 }
+
+export async function submitWish(text) {
+  const res = await fetch(`${API_BASE}/api/wishes`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text }),
+  });
+  return handleResponse(res);
+}
+
+export async function fetchWishes() {
+  const res = await fetch(`${API_BASE}/api/admin/wishes`, {
+    headers: getHeaders(true),
+  });
+  return handleResponse(res);
+}
+
+export async function deleteWish(id) {
+  const res = await fetch(`${API_BASE}/api/admin/wishes/${id}`, {
+    method: 'DELETE',
+    headers: getHeaders(true),
+  });
+  return handleResponse(res);
+}
+
+export async function clearWishes() {
+  const res = await fetch(`${API_BASE}/api/admin/wishes`, {
+    method: 'DELETE',
+    headers: getHeaders(true),
+  });
+  return handleResponse(res);
+}

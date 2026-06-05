@@ -9,6 +9,7 @@ import {
   updateWebsitePassword,
 } from '../controllers/memoryController.js';
 import { getMessageContent, updateMessageContent } from '../controllers/messageController.js';
+import { submitWish, listWishes, deleteWish, clearWishes } from '../controllers/wishController.js';
 import { requireAdmin } from '../middleware/auth.js';
 import { upload } from '../middleware/upload.js';
 
@@ -17,6 +18,7 @@ const router = Router();
 router.post('/verify-password', verifyPassword);
 router.get('/memories', listMemories);
 router.get('/message', getMessageContent);
+router.post('/wishes', submitWish);
 
 router.post('/admin/login', adminLogin);
 
@@ -26,5 +28,8 @@ router.put('/admin/memory/:id', requireAdmin, upload.single('image'), updateMemo
 router.delete('/admin/memory/:id', requireAdmin, deleteMemory);
 router.put('/admin/password', requireAdmin, updateWebsitePassword);
 router.put('/admin/message', requireAdmin, updateMessageContent);
+router.get('/admin/wishes', requireAdmin, listWishes);
+router.delete('/admin/wishes', requireAdmin, clearWishes);
+router.delete('/admin/wishes/:id', requireAdmin, deleteWish);
 
 export default router;
