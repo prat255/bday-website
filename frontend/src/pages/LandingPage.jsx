@@ -49,11 +49,14 @@ export default function LandingPage() {
         transition={{ duration: 1, ease: [0.4, 0, 0.2, 1] }}
       >
         <h1 className="font-display text-4xl md:text-5xl text-cream mb-3 tracking-tight">
-          A Special Journey Awaits You
+          A Special Journey Awaits You Myyyyy Bubuuuu
         </h1>
-        <p className="text-cream/65 text-sm md:text-base mb-10 font-light tracking-wide">
+        <p className="text-cream/65 text-sm md:text-base mb-2 font-light tracking-wide">
           Enter the secret password to begin
         </p>
+        <p className='text-white text-sm md:text-base mb-10 font-light tracking-wide' style={{ fontSize: '12px' }}>Hint: The most important date of our Relationship 👉👈
+        </p>
+
 
         <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-8 text-left">
           <label htmlFor="password" className="sr-only">
@@ -63,7 +66,7 @@ export default function LandingPage() {
             id="password"
             type="password"
             autoComplete="off"
-            placeholder="Your secret password"
+            placeholder="DDMMYYYY"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
