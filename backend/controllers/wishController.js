@@ -6,8 +6,8 @@ export async function submitWish(req, res) {
     if (!text?.trim()) {
       return res.status(400).json({ message: 'Wish text is required' });
     }
-    if (text.trim().length > 500) {
-      return res.status(400).json({ message: 'Wish must be 500 characters or less' });
+    if (text.trim().length > 1000) {
+      return res.status(400).json({ message: '1000 characters ke andar me likho, agar usse zyada hai toh let me know on signal' });
     }
 
     const wishes = await getWishes();

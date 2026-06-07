@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import AnimatedBackground from '../components/AnimatedBackground';
 import ErrorMessage from '../components/ErrorMessage';
@@ -35,6 +35,12 @@ export default function WishPage() {
     navigate('/');
   };
 
+  const openSignal = () => {
+    window.location.href='sgnl://signal.me/#p/+917393928505'
+  }
+
+
+
   return (
     <motion.section
       className="relative min-h-screen gradient-romantic flex flex-col items-center justify-center px-4 py-16"
@@ -54,7 +60,7 @@ export default function WishPage() {
           <>
             <h1 className="font-display text-4xl md:text-5xl text-cream mb-3">Make a Wish</h1>
             <p className="text-cream/60 text-sm md:text-base mb-10 font-light">
-              Write something only I will see — a wish, a thought, or a note back to me.
+              Write something only I will see. It can be a wish, a thought, or a note back to me.
             </p>
 
             <motion.form
@@ -84,24 +90,24 @@ export default function WishPage() {
                   placeholder="This year, I wish for..."
                   value={text}
                   onChange={(e) => setText(e.target.value)}
-                  maxLength={500}
+                  maxLength={1000}
                   disabled={submitting}
                   required
                 />
-                <p className="text-xs text-cream/40 text-right mt-1">{text.length}/500</p>
+                <p className="text-xs text-cream/40 text-right mt-1">{text.length}/1000</p>
                 <ErrorMessage message={error} />
                 <div className="flex flex-col sm:flex-row gap-3 mt-6">
                   <button type="submit" className="btn-primary flex-1" disabled={submitting || !text.trim()}>
                     {submitting ? 'Sending...' : 'Place in wish box'}
                   </button>
-                  <button
+                  {/* { <button
                     type="button"
                     className="btn-ghost flex-1"
                     onClick={handleRestart}
                     disabled={submitting}
                   >
                     Skip
-                  </button>
+                  </button> } */}
                 </div>
               </div>
             </motion.form>
@@ -121,13 +127,25 @@ export default function WishPage() {
             >
               ♥
             </motion.div>
-            <h2 className="font-display text-3xl text-cream mb-3">Your wish is safe with me</h2>
-            <p className="text-cream/60 text-sm mb-8 leading-relaxed">
-              Thank you for sharing something so personal. I&apos;ll keep it close.
+            <h2 className="font-display text-3xl text-cream mb-3">I Received my Bubuuuu ki Wish! 😋</h2>
+            <p className="text-cream/60 text-m mb-3 leading-relaxed">
+              Thank you for sharing your wish with me. I&apos;ll try my bestttt to make this come trueee.
             </p>
-            <button type="button" className="btn-primary" onClick={handleRestart}>
-              Restart Journey
+            <p className="text-cream/60 text-xs mb-8 leading-relaxed">
+              You may askkkk 2 more wishes by restarting the Journey again... 👉👈
+            </p>
+
+
+            <button type="button" className="btn-primary" onClick={openSignal}>
+              Ab Iss button ko Click Karke Signal par aa jaao
             </button>
+
+
+
+            
+
+
+
           </motion.div>
         )}
       </motion.div>

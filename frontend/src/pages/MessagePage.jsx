@@ -138,9 +138,9 @@ export default function MessagePage() {
           <button type="button" className="btn-primary" onClick={() => navigate('/wish')}>
             Make a Wish
           </button>
-          <button type="button" className="btn-ghost" onClick={handleRestart}>
+          {/* <button type="button" className="btn-ghost" onClick={handleRestart}>
             Restart Journey
-          </button>
+          </button> */}
         </motion.div>
       </motion.div>
     </motion.section>
