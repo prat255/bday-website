@@ -58,9 +58,9 @@ export default function WishPage() {
       >
         {!submitted ? (
           <>
-            <h1 className="font-display text-4xl md:text-5xl text-cream mb-3">Make a Wish</h1>
+            <h1 className="font-display text-4xl md:text-5xl text-cream mb-3">Make a Wish Bebeeeeee 😘</h1>
             <p className="text-cream/60 text-sm md:text-base mb-10 font-light">
-              Write something only I will see. It can be a wish, a thought, or a note back to me.
+              Write something, It can be a wish, a thought, or a note back to me.
             </p>
 
             <motion.form
@@ -87,7 +87,7 @@ export default function WishPage() {
                 <textarea
                   id="wish-text"
                   className="input-field min-h-[140px] resize-none text-center font-display text-lg leading-relaxed"
-                  placeholder="This year, I wish for..."
+                  placeholder="Bataooo Bataoooo Bubuuuuu..."
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                   maxLength={1000}
