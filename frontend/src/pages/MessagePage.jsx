@@ -18,13 +18,24 @@ const FALLBACK = {
 };
 
 function MessageTypewriter({ text }) {
+  const normalizedText = text.replace(/\\n/g, '\n');
+
   return (
     <Typewriter
-      key={text}
+      key={normalizedText}
+      // normalizedText = text.replace(/\\n/g, '\n');
       onInit={(typewriter) => {
-        text.split('').forEach((char) => {
-          typewriter.typeString(char);
+        normalizedText.split('').forEach((char) => {
+
+          if (char === '\n') {
+            typewriter.typeString('<br/>')
+          } else {
+            typewriter.typeString(char);
+          }
+          // console.log(JSON.stringify(text));
+
           if (/[.!?]/.test(char)) typewriter.pauseFor(400);
+          
         });
         typewriter.start();
       }}
@@ -138,9 +149,9 @@ export default function MessagePage() {
           <button type="button" className="btn-primary" onClick={() => navigate('/wish')}>
             Make a Wish
           </button>
-          {/* <button type="button" className="btn-ghost" onClick={handleRestart}>
+          <button type="button" className="btn-ghost" onClick={handleRestart}>
             Restart Journey
-          </button> */}
+          </button>
         </motion.div>
       </motion.div>
     </motion.section>
