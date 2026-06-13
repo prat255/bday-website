@@ -47,7 +47,14 @@ export default function MemoryTypewriter({ text, layoutKey, maxHeight, fitToHeig
             key={`${layoutKey}-${fontSize}`}
             onInit={(typewriter) => {
               text.split('').forEach((char) => {
-                typewriter.typeString(char);
+	
+		if (char == "\n"){
+			typewriter.typeString('<br/>')
+		} else {
+			typewriter.typeString(char);
+		}
+
+                //typewriter.typeString(char);
                 if (/[.!?,:;]/.test(char)) {
                   typewriter.pauseFor(280);
                 }
